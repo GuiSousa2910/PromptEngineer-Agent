@@ -1,0 +1,20 @@
+[project]
+name = "promptengineer-agent"
+version = "0.1.0"
+description = "Gemini-based prompt refinement preprocessor"
+requires-python = ">=3.10"
+dependencies = ["google-genai>=1.0.0", "python-dotenv>=1.0.0"]
+
+[project.scripts]
+refine = "refiner.cli:main"
+
+[tool.setuptools]
+packages = ["refiner"]
+
+[tool.pytest.ini_options]
+addopts = "-m 'not live'"
+markers = ["live: hits the real Gemini API (requires GEMINI_API_KEY)"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
