@@ -1,13 +1,13 @@
 # PromptEngineer-Agent
 
-Pre-processing agent: turns a rough draft prompt into a refined, token-efficient
-prompt (pt-BR) for a downstream LLM agent. Powered by the Gemini API.
+Especialista em refinamento de prompts: recebe um prompt rascunho e devolve **apenas**
+um prompt otimizado — direto, detalhado, sem ambiguidade e token-eficiente — pronto
+para colar em outro agente LLM (mais caro). Powered by the Gemini API.
 
-It sits in front of a second, more expensive LLM agent: feed it a rough draft,
-and it cleans, tightens, structures, and fact-aligns that prompt — optionally
-researching the entities it mentions via Google Search grounding — so the
-downstream agent receives something direct, objective, detailed, and cheaper to
-run per call.
+Ele fica na frente de um segundo agente LLM: você cola um rascunho e ele re-engenheira
+em um prompt mais claro e denso (papel, tarefa, restrições e formato de saída
+explícitos), para que o agente a jusante entenda melhor e gaste menos tokens por
+chamada. A pesquisa web (Google Search grounding) é opcional, via `--research`.
 
 ## Setup
 
