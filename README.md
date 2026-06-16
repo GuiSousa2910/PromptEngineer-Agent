@@ -17,7 +17,7 @@ run per call.
 ## CLI usage
 
     refine "Quero um texto sobre o impacto da IA na educacao"
-    refine --no-research "..."             # skip web research (faster/cheaper)
+    refine --research "..."                # add Google Search grounding (slower, may add detail)
     refine -f draft.txt                    # read draft from a file
     cat draft.txt | refine                 # read draft from stdin
     refine -m gemini-2.5-flash-lite "..."  # cheapest/fastest model
@@ -28,7 +28,7 @@ Output: only the refined prompt, on stdout (pipe it straight to your second agen
 
     from refiner import RefinerConfig, refine_prompt
 
-    cfg = RefinerConfig.from_env(research=True)        # reads GEMINI_API_KEY
+    cfg = RefinerConfig.from_env(research=True)        # opt-in: web grounding (reads GEMINI_API_KEY)
     refined = refine_prompt("o meu prompt rascunho", cfg)
     print(refined)
 
@@ -37,8 +37,8 @@ Output: only the refined prompt, on stdout (pipe it straight to your second agen
 | Flag | Default | Meaning |
 |------|---------|---------|
 | `--model / -m`     | gemini-2.5-flash | Gemini model id |
-| `--no-research`    | research on | Disable Google Search grounding |
-| `--research`       | research on | Force-enable Google Search grounding |
+| `--no-research`    | research off | Disable Google Search grounding (default) |
+| `--research`       | research off | Enable Google Search grounding (opt-in) |
 | `--temperature / -t` | 0.3 | Sampling temperature |
 | `--max-tokens`     | 2048 | Max output tokens |
 | `--thinking`       | 0 | Thinking budget (0 = off) |

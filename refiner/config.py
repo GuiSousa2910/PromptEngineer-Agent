@@ -7,6 +7,7 @@ DEFAULT_MODEL = "gemini-2.5-flash"
 DEFAULT_TEMPERATURE = 0.3
 DEFAULT_MAX_OUTPUT_TOKENS = 2048
 DEFAULT_THINKING_BUDGET = 0  # 0 = disable thinking → lowest latency/cost
+DEFAULT_RESEARCH = False  # web research is opt-in (--research); keeps output lean
 DEFAULT_OUTPUT_LANGUAGE = "pt-BR"
 ENV_API_KEY = "GEMINI_API_KEY"
 
@@ -18,7 +19,7 @@ class RefinerConfig:
     temperature: float = DEFAULT_TEMPERATURE
     max_output_tokens: int = DEFAULT_MAX_OUTPUT_TOKENS
     thinking_budget: int = DEFAULT_THINKING_BUDGET
-    research: bool = True
+    research: bool = DEFAULT_RESEARCH
     output_language: str = DEFAULT_OUTPUT_LANGUAGE
 
     @classmethod

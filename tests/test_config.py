@@ -7,7 +7,7 @@ def test_defaults_from_env(monkeypatch):
     c = RefinerConfig.from_env()
     assert c.api_key == "k"
     assert c.model == DEFAULT_MODEL
-    assert c.research is True
+    assert c.research is False
     assert c.output_language == "pt-BR"
     assert c.thinking_budget == 0
 
