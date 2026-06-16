@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: promptengineer-agent
+Version: 0.1.0
+Summary: Gemini-based prompt refinement preprocessor
+Requires-Python: >=3.10
+License-File: LICENSE
+Requires-Dist: google-genai>=1.0.0
+Requires-Dist: python-dotenv>=1.0.0
+Dynamic: license-file
