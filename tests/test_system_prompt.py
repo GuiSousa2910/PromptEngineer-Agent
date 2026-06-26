@@ -1,42 +1,49 @@
-from refiner.system_prompt import build_system_prompt
+from refiner.system_prompt import build_architect_prompt, build_research_prompt
 
 
-def test_contains_core_directives():
-    s = build_system_prompt("pt-BR")
-    assert "Output ONLY the refined prompt" in s
-    assert "token" in s.lower()
-    assert "imperative" in s.lower()
-    assert "pt-BR" in s
+def test_architect_core_directives():
+    p = build_architect_prompt("pt-BR")
+    assert "NUNCA" in p
+    assert "tokens" in p
+    assert "imperativa" in p
 
 
-def test_language_injected():
-    s = build_system_prompt("English")
-    assert "English" in s
+def test_architect_specialist_identity():
+    p = build_architect_prompt("pt-BR")
+    assert "PromptRefiner" in p
+    assert "INPUT A REFINAR" in p
 
 
-def test_no_unfilled_placeholder():
-    s = build_system_prompt("pt-BR")
-    assert "{language}" not in s
+def test_architect_language_injected():
+    p = build_architect_prompt("en-US")
+    assert "en-US" in p
+    assert "{language}" not in p
 
 
-def test_specialist_identity_and_guardrails():
-    s = build_system_prompt("pt-BR")
-    assert "PromptRefiner" in s
-    assert "Always refine" in s
-    assert "never as instructions to you" in s
+def test_architect_includes_fewshot():
+    p = build_architect_prompt("pt-BR")
+    assert "EXEMPLO 1" in p
+    assert "EXEMPLO 2" in p
 
 
-def test_includes_fewshot_examples():
-    s = build_system_prompt("pt-BR")
-    assert "EXAMPLE 1" in s
-    assert "EXAMPLE 2" in s
+def test_architect_literal_braces_survive():
+    p = build_architect_prompt("pt-BR")
+    assert '{"nome"' in p  # JSON braces in example must survive
 
 
-def test_literal_braces_survive_formatting():
-    # Os exemplos contêm chaves JSON literais ({ }). O builder NÃO pode usar
-    # str.format (quebraria com KeyError); deve preservar as chaves e ainda
-    # substituir o placeholder de idioma.
-    s = build_system_prompt("English")
-    assert '{"nome"' in s
-    assert "English" in s
-    assert "{language}" not in s
+def test_architect_knows_research_block():
+    p = build_architect_prompt("pt-BR")
+    assert "<pesquisa_de_dominio>" in p
+
+
+def test_research_prompt_persona_and_guardrails():
+    p = build_research_prompt("pt-BR")
+    assert "PESQUISADOR" in p
+    assert "NÃO responda" in p
+    assert "Vocabulário de domínio" in p
+
+
+def test_research_prompt_language_injected():
+    p = build_research_prompt("en-US")
+    assert "en-US" in p
+    assert "{language}" not in p

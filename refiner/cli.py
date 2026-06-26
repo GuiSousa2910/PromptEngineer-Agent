@@ -31,6 +31,10 @@ def build_parser() -> argparse.ArgumentParser:
                    help="Disable Google Search grounding (faster, cheaper).")
     p.add_argument("--research", dest="research", action="store_true", default=None,
                    help="Force-enable Google Search grounding.")
+    p.add_argument("--research-dir", dest="research_dir", default=None,
+                   help="Directory to save research digests (default: research/).")
+    p.add_argument("--no-save-research", dest="save_research", action="store_false", default=None,
+                   help="Run research but do not write the digest file.")
     p.add_argument("-t", "--temperature", type=float, default=None)
     p.add_argument("--max-tokens", dest="max_output_tokens", type=int, default=None)
     p.add_argument("--thinking", dest="thinking_budget", type=int, default=None,
@@ -63,12 +67,16 @@ def main(argv: Optional[list[str]] = None) -> int:
             thinking_budget=args.thinking_budget,
             research=args.research,
             output_language=args.output_language,
+            research_dir=args.research_dir,
+            save_research=args.save_research,
         )
-        refined = refine_prompt(draft, config)
+        result = refine_prompt(draft, config)
     except Exception as exc:  # surface a clean one-line error to stderr
         print(f"Error: {exc}", file=sys.stderr)
         return 1
-    print(refined)
+    print(result.prompt)
+    if result.research_path:
+        print(f"[research saved to {result.research_path}]", file=sys.stderr)
     return 0
 
 

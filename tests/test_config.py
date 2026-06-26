@@ -42,3 +42,15 @@ def test_public_exports():
     assert hasattr(refiner, "RefinerConfig")
     assert hasattr(refiner, "refine_prompt")
     assert hasattr(refiner, "build_client")
+
+
+def test_research_storage_defaults():
+    cfg = RefinerConfig.from_env(api_key="x")
+    assert cfg.research_dir == "research"
+    assert cfg.save_research is True
+
+
+def test_research_storage_overrides():
+    cfg = RefinerConfig.from_env(api_key="x", research_dir="out/r", save_research=False)
+    assert cfg.research_dir == "out/r"
+    assert cfg.save_research is False
