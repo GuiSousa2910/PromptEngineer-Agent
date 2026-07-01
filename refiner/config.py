@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 DEFAULT_MODEL = "gemini-2.5-flash"
 DEFAULT_TEMPERATURE = 0.1  # low = deterministic instruction-following; was 0.3
-DEFAULT_MAX_OUTPUT_TOKENS = 2048
+DEFAULT_MAX_OUTPUT_TOKENS = 4096  # room for detailed, context-rich prompts (was 2048)
 DEFAULT_THINKING_BUDGET = 0  # 0 = disable thinking → lowest latency/cost
 DEFAULT_RESEARCH = False  # web research is opt-in (--research); keeps output lean
 DEFAULT_OUTPUT_LANGUAGE = "pt-BR"

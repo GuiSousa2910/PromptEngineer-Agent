@@ -65,7 +65,7 @@ stderr: no modo `--research`, o caminho do digest salvo (`[research saved to ...
 | `--research-dir`   | research/ | Onde salvar os digests de pesquisa |
 | `--no-save-research` | salva | Pesquisa, mas não grava o arquivo do digest |
 | `--temperature / -t` | 0.1 | Sampling temperature |
-| `--max-tokens`     | 2048 | Max output tokens |
+| `--max-tokens`     | 4096 | Max output tokens |
 | `--thinking`       | 0 | Thinking budget (0 = off) |
 | `--language / -l`  | pt-BR | Output language |
 | `--api-key`        | env | Override GEMINI_API_KEY |

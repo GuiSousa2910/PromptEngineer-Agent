@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from typing import Optional
 
@@ -45,6 +46,33 @@ def build_parser() -> argparse.ArgumentParser:
     return p
 
 
+def _render(result) -> None:
+    """Present the refined prompt.
+
+    Piped/redirected (stdout not a TTY): keep the raw contract — only the prompt
+    on stdout, research path on stderr. Interactive (TTY): clear the screen and
+    frame the prompt so it doesn't pile up under the echoed command.
+    """
+    if not sys.stdout.isatty():
+        print(result.prompt)
+        if result.research_path:
+            print(f"[research saved to {result.research_path}]", file=sys.stderr)
+        return
+
+    os.system("cls" if os.name == "nt" else "clear")
+    bar = "═" * 60
+    rule = "─" * 60
+    print(bar)
+    print("  PROMPT REFINADO")
+    print(bar)
+    print()
+    print(result.prompt)
+    print()
+    print(rule)
+    if result.research_path:
+        print(f"[pesquisa salva em {result.research_path}]", file=sys.stderr)
+
+
 def main(argv: Optional[list[str]] = None) -> int:
     try:
         from dotenv import load_dotenv
@@ -74,9 +102,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     except Exception as exc:  # surface a clean one-line error to stderr
         print(f"Error: {exc}", file=sys.stderr)
         return 1
-    print(result.prompt)
-    if result.research_path:
-        print(f"[research saved to {result.research_path}]", file=sys.stderr)
+    _render(result)
     return 0
 
 
